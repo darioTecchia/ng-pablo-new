@@ -266,6 +266,7 @@ export class MainComponent implements OnInit {
 
     onFilterSettingsChange(payload) {
         this.imageFilterService.updateFilter(this.filterSettings.filters[this.filterSettings.selectedFilterIndex]);
+        console.log(payload);
     }
 
     onTextSettingsChange(payload) {
