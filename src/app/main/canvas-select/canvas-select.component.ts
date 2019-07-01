@@ -76,6 +76,8 @@ export class CanvasSelectComponent implements AfterViewInit {
     // fabric test
     var canvas = window["_canvas"] = new fabric.Canvas('canvas-photo');
 
+    // canvas.backgroundImageStretch = false;
+
     var headerText = new fabric.Textbox('Double-click to edit', this.headerProps).setControlsVisibility(this.controlsVisibility);
 
     var bodyText = new fabric.Textbox('Double-click to edit', this.bodyProps).setControlsVisibility(this.controlsVisibility);
@@ -86,12 +88,16 @@ export class CanvasSelectComponent implements AfterViewInit {
     canvas.add(bodyText);
     canvas.add(captionText);
 
+    let center = canvas.getCenter();
     fabric.Image.fromURL(this.imageSettings.images[this.imageSettings.selectedImageUniqueId].url, function (img) {
       // add background image
-      img.crossOrigin = "anonymous";
       canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-        width: canvas.width,
-        crossOrigin: 'anonymous'
+        scaleX: canvas.height / img.height,
+        scaleY: canvas.height / img.height,
+        top: center.top,
+        left: center.left,
+        originX: 'center',
+        originY: 'center'
       });
     });
 
