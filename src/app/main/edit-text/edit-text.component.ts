@@ -13,6 +13,9 @@ import { EditableTextComponent } from '../canvas-select/overlays/overlay-texts/s
 export class EditTextComponent implements OnInit {
 
   @Input() textSettings: any;
+  @Input() textComponent: string;
+
+  private textComponentObject: any;
 
   private isShowColors: boolean;
   private isShowFonts: boolean;
@@ -23,6 +26,9 @@ export class EditTextComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.textComponentObject = window[this.textComponent];
+    console.log(this.textComponentObject);
 
     //subscribe
     this.editSettingsService.storeEditText.subscribe((editableTextComponent) => this.onUpdateEditText(editableTextComponent));

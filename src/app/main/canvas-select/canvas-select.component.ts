@@ -89,8 +89,6 @@ export class CanvasSelectComponent implements AfterViewInit {
 
     canvas.selection = false;
 
-    console.log(this.textSettings);
-
     var headerText = window["_headerText"] = new fabric.Textbox('Double-click to edit', this.headerProps).setControlsVisibility(this.controlsVisibility);
 
     var bodyText = window["_bodyText"] = new fabric.Textbox('Double-click to edit', this.bodyProps).setControlsVisibility(this.controlsVisibility);
@@ -123,8 +121,12 @@ export class CanvasSelectComponent implements AfterViewInit {
       });
     });
 
-    canvas.on('', function (e) {
+    canvas.on('object:selected', function (e) {
+      console.log(e);
+    })
 
+    canvas.on('selection:cleared', function (e) {
+      console.log(e);
     })
 
     canvas.on('object:moving', function (e) {
