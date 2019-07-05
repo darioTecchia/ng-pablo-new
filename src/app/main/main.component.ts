@@ -8,6 +8,7 @@ declare var fabric: any;
 import { EditSettingsService } from '../shared/services/edit-settings.service';
 import { GenerateImageService } from '../shared/services/generate-image.service';
 import { ImageFilterService } from '../shared/services/image-filter.service';
+import { CanvasSelectComponent } from './canvas-select/canvas-select.component';
 
 @Component({
   selector: 'app-main',
@@ -124,8 +125,8 @@ export class MainComponent implements OnInit {
         },
         {
           name: "Instagram",
-          width: 500,
-          height: 500
+          width: 1080,
+          height: 1080
         },
         {
           name: "Twitter and Facebook",
@@ -273,8 +274,30 @@ export class MainComponent implements OnInit {
     window["_canvas"].setWidth(payload.sizes[payload.selectedSizeIndex].width);
     window["_canvas"].setHeight(payload.sizes[payload.selectedSizeIndex].height);
     window["_canvas"].calcOffset();
-    // this.editSettingsService.updateCanvas();
-    this.editSettingsService.updateOverlays();
+    let center = window['_canvas'].getCenter();
+    window["_canvas"].backgroundImage.set(
+      {
+        scaleX: window['_canvas'].height / window["_canvas"].backgroundImage._element.height,
+        scaleY: window['_canvas'].height / window["_canvas"].backgroundImage._element.height,
+        top: center.top,
+        left: center.left,
+        originX: 'center',
+        originY: 'center',
+        crossOrigin: 'anonymous'
+      }
+    )
+
+    let selectedSize = payload.sizes[payload.selectedSizeIndex]
+
+    window['_headerText'].top = 100
+    window['_headerText'].left = (selectedSize.width / 2) - (window['_headerText'].width / 2)
+
+    window['_bodyText'].top = (selectedSize.height / 2)
+    window['_bodyText'].left = (selectedSize.width / 2) - (window['_bodyText'].width / 2)
+
+    window['_captionText'].top = selectedSize.height - 100
+    window['_captionText'].left = (selectedSize.width / 2) - (window['_captionText'].width / 2)
+
   }
 
   onFilterReset() {
@@ -288,8 +311,16 @@ export class MainComponent implements OnInit {
   }
 
   onTextSettingsChange(payload) {
-    this.editSettingsService.updateOverlays();
-    console.log(payload, this.textSettings.models["0"]);
+    window["_headerText"].opacity = payload.hasHeader ? 1 : 0;
+    window["_headerText"].selectable = payload.hasHeader;
+
+    window["_bodyText"].opacity = payload.hasBody ? 1 : 0;
+    window["_bodyText"].selectable = payload.hasBody;
+
+    window["_captionText"].opacity = payload.hasCaption ? 1 : 0;
+    window["_captionText"].selectable = payload.hasCaption;
+
+    window["_canvas"].renderAll();
   }
 
   onLogoSettingsChange(payload) {

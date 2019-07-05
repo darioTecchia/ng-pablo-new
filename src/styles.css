@@ -166,7 +166,8 @@ input::selection {
 
 .control-panel {
   width: 220px;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
+  margin: 13px;
   padding: 15px;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -183,7 +184,7 @@ input::selection {
 /* Canvas Input */
 
 .control-panel-canvas {
-  width: 530px;
+  width: 100%;
   margin: 0 auto;
 }
 

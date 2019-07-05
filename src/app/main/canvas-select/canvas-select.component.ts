@@ -27,7 +27,7 @@ export class CanvasSelectComponent implements AfterViewInit {
   private headerProps: any = {
     width: 200,
     top: 50,
-    left: 500 / 2 - 75,
+    left: 500 / 2 - 100,
     fontSize: 21,
     hasRotatingPoint: false,
     color: 'black',
@@ -37,7 +37,7 @@ export class CanvasSelectComponent implements AfterViewInit {
   private bodyProps: any = {
     width: 200,
     top: 700 / 2,
-    left: 500 / 2 - 75,
+    left: 500 / 2 - 100,
     fontSize: 21,
     hasRotatingPoint: false,
     color: 'black',
@@ -47,7 +47,7 @@ export class CanvasSelectComponent implements AfterViewInit {
   private captionProps: any = {
     width: 200,
     top: 700 - 50,
-    left: 500 / 2 - 75,
+    left: 500 / 2 - 100,
     fontSize: 21,
     hasRotatingPoint: false,
     color: 'black',
@@ -64,7 +64,7 @@ export class CanvasSelectComponent implements AfterViewInit {
     bm: false,
     tl: false,
     tr: false
-}
+  }
 
   constructor(private editSettingsService: EditSettingsService,
     private generateImageService: GenerateImageService,
@@ -73,20 +73,42 @@ export class CanvasSelectComponent implements AfterViewInit {
 
   ngAfterViewInit() {
 
+    let selectedSize = this.sizeSettings.sizes[this.sizeSettings.selectedSizeIndex]
+
+    this.headerProps.top = 100
+    this.headerProps.left = (selectedSize.width / 2) - (this.headerProps.width / 2)
+
+    this.bodyProps.top = (selectedSize.height / 2)
+    this.bodyProps.left = (selectedSize.width / 2) - (this.bodyProps.width / 2)
+
+    this.captionProps.top = selectedSize.height - 100
+    this.captionProps.left = (selectedSize.width / 2) - (this.bodyProps.width / 2)
+
     // fabric test
     var canvas = window["_canvas"] = new fabric.Canvas('canvas-photo');
 
-    // canvas.backgroundImageStretch = false;
+    canvas.selection = false;
 
-    var headerText = new fabric.Textbox('Double-click to edit', this.headerProps).setControlsVisibility(this.controlsVisibility);
+    console.log(this.textSettings);
 
-    var bodyText = new fabric.Textbox('Double-click to edit', this.bodyProps).setControlsVisibility(this.controlsVisibility);
+    var headerText = window["_headerText"] = new fabric.Textbox('Double-click to edit', this.headerProps).setControlsVisibility(this.controlsVisibility);
 
-    var captionText = new fabric.Textbox('Double-click to edit', this.captionProps).setControlsVisibility(this.controlsVisibility);
+    var bodyText = window["_bodyText"] = new fabric.Textbox('Double-click to edit', this.bodyProps).setControlsVisibility(this.controlsVisibility);
+
+    var captionText = window["_captionText"] = new fabric.Textbox('Double-click to edit', this.captionProps).setControlsVisibility(this.controlsVisibility);
 
     canvas.add(headerText);
     canvas.add(bodyText);
     canvas.add(captionText);
+
+    headerText.opacity = this.textSettings.hasHeader ? 1 : 0;
+    headerText.selectable = this.textSettings.hasHeader;
+
+    bodyText.opacity = this.textSettings.hasBody ? 1 : 0;
+    bodyText.selectable = this.textSettings.hasBody;
+
+    captionText.opacity = this.textSettings.hasCaption ? 1 : 0;
+    captionText.selectable = this.textSettings.hasCaption;
 
     let center = canvas.getCenter();
     fabric.Image.fromURL(this.imageSettings.images[this.imageSettings.selectedImageUniqueId].url, function (img) {
@@ -101,7 +123,12 @@ export class CanvasSelectComponent implements AfterViewInit {
       });
     });
 
+    canvas.on('', function (e) {
+
+    })
+
     canvas.on('object:moving', function (e) {
+
       var obj = e.target;
       // if object is too big ignore
       if (obj.currentHeight > obj.canvas.height || obj.currentWidth > obj.canvas.width) {
