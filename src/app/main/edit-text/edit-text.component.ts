@@ -15,11 +15,9 @@ export class EditTextComponent implements OnInit {
   @Input() textSettings: any;
   @Input() textComponent: string;
 
-  private textComponentObject: any;
-
   private isShowColors: boolean;
   private isShowFonts: boolean;
-  private editableTextComponentCurrent: EditableTextComponent;
+  private editableTextComponentCurrent: any = null;
 
   constructor(public el: ElementRef, private editSettingsService: EditSettingsService) {
     this.el = el.nativeElement;
@@ -27,11 +25,11 @@ export class EditTextComponent implements OnInit {
 
   ngOnInit() {
 
-    this.textComponentObject = window[this.textComponent];
-    console.log(this.textComponentObject);
-
     //subscribe
-    this.editSettingsService.storeEditText.subscribe((editableTextComponent) => this.onUpdateEditText(editableTextComponent));
+    this.editSettingsService.storeEditText.subscribe((editableTextComponent) => {
+      this.editableTextComponentCurrent = editableTextComponent;
+      console.log(editableTextComponent);
+    });
   }
 
   private onUpdateEditText(editableTextComponent: EditableTextComponent) {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild, OnInit } from '@angular/core';
 
 import * as _ from "underscore"
 
@@ -14,7 +14,7 @@ import { ImageFilterService } from '../../shared/services/image-filter.service';
   templateUrl: 'canvas-select.component.html',
   styleUrls: ['canvas-select.component.css'],
 })
-export class CanvasSelectComponent implements AfterViewInit {
+export class CanvasSelectComponent implements AfterViewInit, OnInit {
 
   // @ViewChild('photoCanvas') canvasArtboard: ElementRef;
 
@@ -70,6 +70,9 @@ export class CanvasSelectComponent implements AfterViewInit {
     private generateImageService: GenerateImageService,
     private imageFilterService: ImageFilterService) { }
 
+  ngOnInit() {
+
+  }
 
   ngAfterViewInit() {
 
@@ -121,15 +124,15 @@ export class CanvasSelectComponent implements AfterViewInit {
       });
     });
 
-    canvas.on('object:selected', function (e) {
-      console.log(e);
+    canvas.on('object:selected', (e) => {
+      this.editSettingsService.updateEditText(e.target);
     })
 
-    canvas.on('selection:cleared', function (e) {
-      console.log(e);
+    canvas.on('selection:cleared', (e) => {
+      this.editSettingsService.updateEditText(e.deselected[0]);
     })
 
-    canvas.on('object:moving', function (e) {
+    canvas.on('object:moving', (e) => {
 
       var obj = e.target;
       // if object is too big ignore

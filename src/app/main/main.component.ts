@@ -286,9 +286,9 @@ export class MainComponent implements OnInit {
         crossOrigin: 'anonymous'
       }
     )
-    
+
     let selectedSize = payload.sizes[payload.selectedSizeIndex]
-    
+
     window['_headerText'].top = 100;
     window['_headerText'].left = (selectedSize.width / 2) - (window['_headerText'].width / 2);
     window['_headerText'].setCoords();
@@ -297,7 +297,7 @@ export class MainComponent implements OnInit {
     window['_bodyText'].top = selectedSize.height / 2;
     window['_bodyText'].left = (selectedSize.width / 2) - (window['_bodyText'].width / 2);
     window['_bodyText'].setCoords();
-    
+
     window['_captionText'].top = selectedSize.height - 100;
     window['_captionText'].left = (selectedSize.width / 2) - (window['_captionText'].width / 2);
     window['_captionText'].setCoords();
