@@ -125,8 +125,8 @@ export class MainComponent implements OnInit {
         },
         {
           name: "Instagram",
-          width: 1080,
-          height: 1080
+          width: 800,
+          height: 800
         },
         {
           name: "Twitter and Facebook",
@@ -263,6 +263,7 @@ export class MainComponent implements OnInit {
       });
     });
     // this.editSettingsService.updateCanvas();
+    window["_canvas"].renderAll();
   }
 
   onCanvasReposition() {
@@ -273,7 +274,6 @@ export class MainComponent implements OnInit {
     console.log(payload);
     window["_canvas"].setWidth(payload.sizes[payload.selectedSizeIndex].width);
     window["_canvas"].setHeight(payload.sizes[payload.selectedSizeIndex].height);
-    window["_canvas"].calcOffset();
     let center = window['_canvas'].getCenter();
     window["_canvas"].backgroundImage.set(
       {
@@ -286,18 +286,23 @@ export class MainComponent implements OnInit {
         crossOrigin: 'anonymous'
       }
     )
-
+    
     let selectedSize = payload.sizes[payload.selectedSizeIndex]
+    
+    window['_headerText'].top = 100;
+    window['_headerText'].left = (selectedSize.width / 2) - (window['_headerText'].width / 2);
+    window['_headerText'].setCoords();
 
-    window['_headerText'].top = 100
-    window['_headerText'].left = (selectedSize.width / 2) - (window['_headerText'].width / 2)
 
-    window['_bodyText'].top = (selectedSize.height / 2)
-    window['_bodyText'].left = (selectedSize.width / 2) - (window['_bodyText'].width / 2)
+    window['_bodyText'].top = selectedSize.height / 2;
+    window['_bodyText'].left = (selectedSize.width / 2) - (window['_bodyText'].width / 2);
+    window['_bodyText'].setCoords();
+    
+    window['_captionText'].top = selectedSize.height - 100;
+    window['_captionText'].left = (selectedSize.width / 2) - (window['_captionText'].width / 2);
+    window['_captionText'].setCoords();
 
-    window['_captionText'].top = selectedSize.height - 100
-    window['_captionText'].left = (selectedSize.width / 2) - (window['_captionText'].width / 2)
-
+    window["_canvas"].calcOffset();
   }
 
   onFilterReset() {
