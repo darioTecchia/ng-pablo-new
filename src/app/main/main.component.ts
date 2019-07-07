@@ -209,12 +209,12 @@ export class MainComponent implements OnInit {
       }
       ],
       options: {
-        align: ['align-left', 'align-center', 'align-right'],
-        sizes: ['normal', 'large', 'largest'],
+        align: ['left', 'center', 'right'],
+        sizes: [21, 24, 27],
         sizePercentage: ['100', '110', '120'],
         fonts: [
-          { name: 'Arial', family: 'Arial, Helvetica, sans-serif' },
-          { name: 'Times', family: '"Times New Roman", Times, serif' }
+          'Times New Roman',
+          'Arial'
         ],
         colors: ['Black', '#9C27B0', '#2196F3', '#009688', '#CDDC39', '#FF9800']
       }

@@ -19,17 +19,40 @@ export class EditTextComponent implements OnInit {
   private isShowFonts: boolean;
   private editableTextComponentCurrent: any = null;
 
+  private top: number = 0;
+  private left: number = 0;
+
   constructor(public el: ElementRef, private editSettingsService: EditSettingsService) {
     this.el = el.nativeElement;
   }
 
   ngOnInit() {
 
+    console.log(this.textSettings);
+    
+
     //subscribe
     this.editSettingsService.storeEditText.subscribe((editableTextComponent) => {
-      this.editableTextComponentCurrent = editableTextComponent;
-      console.log(editableTextComponent);
+
+      if(editableTextComponent && editableTextComponent.reposition) {
+        this.top = this.editableTextComponentCurrent.top - this.editableTextComponentCurrent.height * 2 - 10;
+        this.left = this.editableTextComponentCurrent.left - this.editableTextComponentCurrent.width + 130;
+        return;
+      }
+
+      if(editableTextComponent && editableTextComponent.selected) {
+        this.editableTextComponentCurrent = editableTextComponent.elem;
+        this.top = this.editableTextComponentCurrent.top - this.editableTextComponentCurrent.height * 2 - 10;
+        this.left = this.editableTextComponentCurrent.left - this.editableTextComponentCurrent.width + 130;
+        console.log(this.editableTextComponentCurrent);
+      } else {
+        this.editableTextComponentCurrent = null;
+      }
     });
+  }
+
+  private update() {
+    window['_canvas'].renderAll();
   }
 
   private onUpdateEditText(editableTextComponent: EditableTextComponent) {
@@ -48,31 +71,25 @@ export class EditTextComponent implements OnInit {
     this.onCloseOptions()
   }
 
-  private onShowFontOptions() {
-
-    //clear
-    this.isShowColors = false;
-
-    //update
-    this.isShowFonts = true;
-  }
-
   private onUpdateFont(index) {
-    this.editableTextComponentCurrent.model.fontIndex = index;
+    this.editableTextComponentCurrent.fontFamily = index;
+    this.update();
+    // this.editableTextComponentCurrent.model.fontIndex = index;
   }
 
   private onToggleBold() {
-    this.editableTextComponentCurrent.model.isBold = !this.editableTextComponentCurrent.model.isBold;
+    this.editableTextComponentCurrent.fontWeight = this.editableTextComponentCurrent.fontWeight == 'bold' ? '' : 'bold';
+    this.update();
   }
 
   private onToggleItalic() {
-    this.editableTextComponentCurrent.model.isItalic = !this.editableTextComponentCurrent.model.isItalic;
+    this.editableTextComponentCurrent.fontStyle = this.editableTextComponentCurrent.fontStyle == 'italic' ? '' : 'italic';
+    this.update();
   }
 
   private onUpdateSize() {
-
     //target
-    let sizeIndex = this.editableTextComponentCurrent.model.sizeIndex + 1;
+    let sizeIndex = this.textSettings.options.sizes.indexOf(this.editableTextComponentCurrent.fontSize) + 1;
 
     //cycle target check
     if (sizeIndex > this.textSettings.options.sizes.length - 1) {
@@ -80,26 +97,20 @@ export class EditTextComponent implements OnInit {
     }
 
     //update
-    this.editableTextComponentCurrent.model.sizeIndex = sizeIndex;
-  }
-
-  private onShowColorOptions() {
-
-    //clear
-    this.isShowFonts = false;
-
-    //update
-    this.isShowColors = true;
+    this.editableTextComponentCurrent.fontSize = this.textSettings.options.sizes[sizeIndex];
+    this.update();
   }
 
   private onUpdateColor(index) {
-    this.editableTextComponentCurrent.model.colorIndex = index;
+    console.log(index);
+    this.editableTextComponentCurrent.setColor(index);
+    this.update();
   }
 
   private onUpdateAlign() {
 
     //target
-    let alignIndex = this.editableTextComponentCurrent.model.alignIndex + 1;
+    let alignIndex = this.textSettings.options.align.indexOf(this.editableTextComponentCurrent.textAlign) + 1;
 
     //cycle target check
     if (alignIndex > this.textSettings.options.align.length - 1) {
@@ -107,7 +118,8 @@ export class EditTextComponent implements OnInit {
     }
 
     //update
-    this.editableTextComponentCurrent.model.alignIndex = alignIndex;
+    this.editableTextComponentCurrent.textAlign = this.textSettings.options.align[alignIndex];
+    this.update();
   }
 
   private onCloseOptions() {

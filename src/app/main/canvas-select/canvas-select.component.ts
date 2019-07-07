@@ -30,7 +30,7 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
     left: 500 / 2 - 100,
     fontSize: 21,
     hasRotatingPoint: false,
-    color: 'black',
+    fill: 'white',
     textAlign: 'center'
   };
 
@@ -40,7 +40,7 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
     left: 500 / 2 - 100,
     fontSize: 21,
     hasRotatingPoint: false,
-    color: 'black',
+    fill: 'white',
     textAlign: 'center'
   };
 
@@ -50,7 +50,7 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
     left: 500 / 2 - 100,
     fontSize: 21,
     hasRotatingPoint: false,
-    color: 'black',
+    fill: 'white',
     textAlign: 'center'
   };
 
@@ -125,14 +125,32 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
     });
 
     canvas.on('object:selected', (e) => {
-      this.editSettingsService.updateEditText(e.target);
+      this.editSettingsService.updateEditText({
+        elem: e.target,
+        selected: true
+      });
     })
 
+    canvas.on('selection:updated', (e) => {
+      this.editSettingsService.updateEditText({
+        elem: e.target,
+        selected: true
+      });
+    });
+
     canvas.on('selection:cleared', (e) => {
-      this.editSettingsService.updateEditText(e.deselected[0]);
+      this.editSettingsService.updateEditText({
+        elem: e.deselected[0],
+        selected: false
+      });
     })
 
     canvas.on('object:moving', (e) => {
+
+      this.editSettingsService.updateEditText({
+        elem: e.target,
+        reposition: true
+      });
 
       var obj = e.target;
       // if object is too big ignore

@@ -69,6 +69,7 @@ import { ControlPanelBodyComponent } from './main/shared/control-panel/control-p
     ControlPanelBodyComponent
   ],
   imports: [
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

@@ -9,12 +9,13 @@
   top: -54px;
   left: -26px;
   border-radius: 4px;
+  padding-left: 10px;
 }
 
 button {
   width: 12%;
   height: 100%;
-  background-color: #fff;
+  background-color: #242A30;
   border: none;
   border-radius: 4px;
   margin-bottom: 0;
@@ -24,46 +25,37 @@ button.ctrl-font {
   width: 40%;
 }
 
-/* Options Dropdowns */
-.font-dropdown,
-.color-dropdown {
-  display: inline-block;
-  width: 42px;
-  position: absolute;
-  right: 0;
-  top: 50px;
-  cursor: default;
-  z-index: 2;
-}
-
-.color-dropdown {
-  padding-top: 4px;
-}
-
-.font-dropdown {
-  width: 140px;
-  left: 0;
-  right: unset;
-}
-
-
 /* Font Dropdown */
-button.font {
-  margin: 4px auto 0;
-  width: 140px;
-  height: 42px;
+select.font {
+  outline: 0 !important;
+  font-size: small; 
+  width: min-content; 
+  height: -webkit-fill-available; 
+  border: none;
 }
 
-
-/* Color Dropdown */
-button.color {
-  margin: 0 auto;
-  width: 42px;
-  height: 42px;
+option.font {
+  padding-top: 5px;
 }
 
-.color-tile {
-  margin: 0 auto;
-  width: 12px;
-  height: 12px;
+select.font:focus {
+  outline: 0 !important;
+}
+
+.menu-item {
+  color: white; 
+  background-color: #242A30;
+}
+
+.color {
+  width: 15px;
+  height: 15px;
+  margin-top: 19px;
+  border-radius: 4px;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+  height: 100%;
 }

@@ -1,12 +1,13 @@
-<div *ngIf="editableTextComponentCurrent" class="edit-text-container shadow-dropped-down">
+<div [ngStyle] = "{'top.px': top, 'left.px': left}" *ngIf="editableTextComponentCurrent" class="menu-item edit-text-container shadow-dropped-down">
 
-    <button class="ctrl-font float-left" (mouseover)="onShowFontOptions()" (click)="onShowFontOptions()"
+  <!-- <button class="ctrl-font float-left" (mouseover)="onShowFontOptions()" (click)="onShowFontOptions()"
         [style.fontFamily]="editableTextComponentCurrent.__dimensionAffectingProps.fontFamily">{{editableTextComponentCurrent.__dimensionAffectingProps.fontFamily}}</button>
 
     <button class="float-right" (mouseover)="onShowColorOptions()" (click)="onShowColorOptions()">
         <div class="color-tile"
             [style.backgroundColor]="editableTextComponentCurrent.color"></div>
     </button>
+
     <button class="float-right" (mouseover)="onCloseOptions()" (click)="onToggleItalic()"><em>i</em></button>
     <button class="float-right" (mouseover)="onCloseOptions()" (click)="onToggleBold()"><strong>B</strong></button>
     <button class="float-right" (mouseover)="onCloseOptions()" (click)="onUpdateAlign()"><img class="svg-icon"
@@ -26,5 +27,50 @@
             (mouseover)="onUpdateFont(i)">
             <div class="font-tile font-{{i}}" [style.fontFamily]="font.family">{{font.name}}</div>
         </button>
+    </div> -->
+
+  <div style="height: 100%" ngbDropdown class="menu-item float-left d-inline-block">
+    <button [ngStyle]="{'font-family' : editableTextComponentCurrent.fontFamily}" style="width: 100%"
+      class="btn menu-item" id="dropdownFont" ngbDropdownToggle>{{editableTextComponentCurrent.fontFamily}}</button>
+    <div class="menu-item" ngbDropdownMenu aria-labelledby="dropdownFont">
+      <button (click)="onUpdateFont(font)" class="menu-item" ngbDropdownItem
+        *ngFor="let font of textSettings.options.fonts" [ngStyle]="{'font-family' : font}">{{font}}</button>
     </div>
+  </div>
+
+  <button (click)="onToggleBold()" [ngStyle]="{'font-weight': editableTextComponentCurrent.fontWeight}"
+    class="menu-item float-left">
+    B
+  </button>
+
+  <button (click)="onToggleItalic()" [ngStyle]="{'font-style': editableTextComponentCurrent.fontStyle}"
+    class="float-left menu-item">
+    i
+  </button>
+
+  <button (click)="onUpdateSize()" class="float-left menu-item">
+    <img class="svg-icon" [src]="'assets/images/' + editableTextComponentCurrent.fontSize + '-font-size.png'">
+  </button>
+
+  <button (click)="onUpdateAlign()" class="float-left menu-item">
+    <img class="svg-icon" [src]="'assets/svg/align-' + editableTextComponentCurrent.textAlign + '.svg'">
+  </button>
+
+  <div class="middle float-left">
+    <input [ngStyle]="{'background-color' : editableTextComponentCurrent.fill}" #color (change)="onUpdateColor(color.value)" class="color" type="color">
+
+  </div>
+
+  <!-- <div style="height: 100%" ngbDropdown class="menu-item float-left d-inline-block">
+    <button class="btn color" id="dropdownColor" ngbDropdownToggle>
+      <span [ngStyle]="{'background-color' : editableTextComponentCurrent.fill}" class="color">
+
+      </span>
+    </button>
+    <div class="menu-item" ngbDropdownMenu aria-labelledby="dropdownColor">
+      <button (click)="onUpdateColor(color)" class="color" ngbDropdownItem
+        *ngFor="let color of textSettings.options.colors" [ngStyle]="{'background-color' : color}"></button>
+    </div>
+  </div> -->
+
 </div>

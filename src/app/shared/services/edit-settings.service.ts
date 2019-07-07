@@ -28,7 +28,7 @@ export class EditSettingsService {
     this.serviceOverlays.next(isClear);
   }
 
-  public updateEditText(editableTextComponent: EditableTextComponent) {
+  public updateEditText(editableTextComponent: any) {
     this.serviceEditText.next(editableTextComponent);
   }
 
