@@ -28,9 +28,6 @@ export class EditTextComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.textSettings);
-
-
     //subscribe
     this.editSettingsService.storeEditText.subscribe((editableTextComponent) => {
 
@@ -45,7 +42,6 @@ export class EditTextComponent implements OnInit {
         this.editableTextComponentCurrent = editableTextComponent.elem;
         this.top = this.editableTextComponentCurrent.top - 50 - 10;
         this.left = this.editableTextComponentCurrent.left + this.editableTextComponentCurrent.width / 2 - 175;
-        console.log(this.editableTextComponentCurrent);
       } else {
         this.editableTextComponentCurrent = null;
       }

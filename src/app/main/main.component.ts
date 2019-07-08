@@ -142,48 +142,53 @@ export class MainComponent implements OnInit {
       filters: [
         {
           name: "None",
-          method: "channels",
-          args: [{
-            red: 0,
-            green: 0,
-            blue: 0
-          }]
-        }, {
+          method: "none"
+        },
+        {
           name: "Light Contrast",
           method: "contrast",
-          args: [10]
-        }, {
+          index: 0,
+          value: -0.10
+        },
+        {
           name: "Heavy Contrast",
           method: "contrast",
-          args: [20]
-        }, {
+          value: -0.20
+        },
+        {
+          name: "Light Blur",
+          method: "blur",
+          value: 0.1
+        },
+        {
+          name: "Heavy Blur",
+          method: "blur",
+          value: 0.2
+        },
+        {
           name: "Grayscale",
           method: "greyscale",
-          args: null
-        }, {
+          value: null
+        },
+        {
+          name: "Blur Grayscale",
+          method: "blur-greyscale",
+          value: 0.1
+        },
+        {
           name: "Red Tint",
-          method: "channels",
-          args: [{
-            red: 30,
-            green: 0,
-            blue: 0
-          }]
-        }, {
+          method: "gamma",
+          value: [2.2, 0, 0]
+        },
+        {
           name: "Green Tint",
-          method: "channels",
-          args: [{
-            red: 0,
-            green: 30,
-            blue: 0
-          }]
-        }, {
+          method: "gamma",
+          value: [0, 2.2, 0]
+        },
+        {
           name: "Blue Tint",
-          method: "channels",
-          args: [{
-            red: 0,
-            green: 0,
-            blue: 30
-          }]
+          method: "gamma",
+          value: [0, 0, 2.2]
         }
       ]
     }
@@ -230,6 +235,7 @@ export class MainComponent implements OnInit {
   }
 
   onShuffleImages() {
+    this.filterSettings.selectedFilterIndex = 0;
     let center = window['_canvas'].getCenter();
     this.imageSettings.images = _.shuffle(this.imageSettings.images);
     fabric.Image.fromURL(this.imageSettings.images[0].url, function (img) {
@@ -249,6 +255,7 @@ export class MainComponent implements OnInit {
   }
 
   onImageSettingsChange(payload) {
+    this.filterSettings.selectedFilterIndex = 0;
     let center = window['_canvas'].getCenter();
     fabric.Image.fromURL(payload.images[payload.selectedImageUniqueId].url, function (img) {
       // add background image
@@ -306,13 +313,11 @@ export class MainComponent implements OnInit {
   }
 
   onFilterReset() {
-    this.filterSettings.selectedFilterIndex = 0;
-    this.imageFilterService.updateFilter(this.filterSettings.filters[this.filterSettings.selectedFilterIndex]);
+    this.imageFilterService.resetFilter(window["_canvas"].backgroundImage);
   }
 
   onFilterSettingsChange(payload) {
     this.imageFilterService.updateFilter(this.filterSettings.filters[this.filterSettings.selectedFilterIndex]);
-    console.log(payload);
   }
 
   onTextSettingsChange(payload) {
