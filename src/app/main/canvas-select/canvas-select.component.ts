@@ -147,27 +147,35 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
 
     canvas.on('object:moving', (e) => {
 
+      var obj = e.target;
+
+      obj.set({
+        top: this.clamp(obj.top, 0, obj.canvas.height - obj.height),
+        left: this.clamp(obj.left, 0, obj.canvas.width - obj.width),
+      })
+      obj.setCoords();
+
       this.editSettingsService.updateEditText({
         elem: e.target,
         reposition: true
       });
+      
 
-      var obj = e.target;
-      // if object is too big ignore
-      if (obj.currentHeight > obj.canvas.height || obj.currentWidth > obj.canvas.width) {
-        return;
-      }
-      obj.setCoords();
-      // top-left  corner
-      if (obj.getBoundingRect().top < 0 || obj.getBoundingRect().left < 0) {
-        obj.top = Math.max(obj.top, obj.top - obj.getBoundingRect().top);
-        obj.left = Math.max(obj.left, obj.left - obj.getBoundingRect().left);
-      }
-      // bot-right corner
-      if (obj.getBoundingRect().top + obj.getBoundingRect().height > obj.canvas.height || obj.getBoundingRect().left + obj.getBoundingRect().width > obj.canvas.width) {
-        obj.top = Math.min(obj.top, obj.canvas.height - obj.getBoundingRect().height + obj.top - obj.getBoundingRect().top);
-        obj.left = Math.min(obj.left, obj.canvas.width - obj.getBoundingRect().width + obj.left - obj.getBoundingRect().left);
-      }
+      // // if object is too big ignore
+      // if (obj.currentHeight > obj.canvas.height || obj.currentWidth > obj.canvas.width) {
+      //   return;
+      // }
+      // obj.setCoords();
+      // // top-left  corner
+      // if (obj.getBoundingRect().top < 0 || obj.getBoundingRect().left < 0) {
+      //   obj.top = Math.max(obj.top, obj.top - obj.getBoundingRect().top);
+      //   obj.left = Math.max(obj.left, obj.left - obj.getBoundingRect().left);
+      // }
+      // // bot-right corner
+      // if (obj.getBoundingRect().top + obj.getBoundingRect().height > obj.canvas.height || obj.getBoundingRect().left + obj.getBoundingRect().width > obj.canvas.width) {
+      //   obj.top = Math.min(obj.top, obj.canvas.height - obj.getBoundingRect().height + obj.top - obj.getBoundingRect().top);
+      //   obj.left = Math.min(obj.left, obj.canvas.width - obj.getBoundingRect().width + obj.left - obj.getBoundingRect().left);
+      // }
     });
 
     // //subscribe
@@ -175,6 +183,10 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
     // this.imageFilterService.store.subscribe(() => this.onUpdateFilter());
     // this.generateImageService.store.subscribe(() => this.onGenerateDownloadableImage());
   }
+
+  private clamp(num:number, min:number, max:number) {
+    return Math.min(Math.max(num, min), max);
+  };
 
   // load image into canvas
   private onUpdateCanvas() {

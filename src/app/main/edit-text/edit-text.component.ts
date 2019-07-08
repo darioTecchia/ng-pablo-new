@@ -29,27 +29,32 @@ export class EditTextComponent implements OnInit {
   ngOnInit() {
 
     console.log(this.textSettings);
-    
+
 
     //subscribe
     this.editSettingsService.storeEditText.subscribe((editableTextComponent) => {
 
-      if(editableTextComponent && editableTextComponent.reposition) {
-        this.top = this.editableTextComponentCurrent.top - this.editableTextComponentCurrent.height * 2 - 10;
-        this.left = this.editableTextComponentCurrent.left - this.editableTextComponentCurrent.width + 130;
+      if (editableTextComponent && editableTextComponent.reposition) {
+
+        this.top = this.editableTextComponentCurrent.top - 50 - 10;
+        this.left = this.editableTextComponentCurrent.left + this.editableTextComponentCurrent.width / 2 - 175;
         return;
       }
 
-      if(editableTextComponent && editableTextComponent.selected) {
+      if (editableTextComponent && editableTextComponent.selected) {
         this.editableTextComponentCurrent = editableTextComponent.elem;
-        this.top = this.editableTextComponentCurrent.top - this.editableTextComponentCurrent.height * 2 - 10;
-        this.left = this.editableTextComponentCurrent.left - this.editableTextComponentCurrent.width + 130;
+        this.top = this.editableTextComponentCurrent.top - 50 - 10;
+        this.left = this.editableTextComponentCurrent.left + this.editableTextComponentCurrent.width / 2 - 175;
         console.log(this.editableTextComponentCurrent);
       } else {
         this.editableTextComponentCurrent = null;
       }
     });
   }
+
+  private clamp(num: number, min: number, max: number) {
+    return Math.min(Math.max(num, min), max);
+  };
 
   private update() {
     window['_canvas'].renderAll();
