@@ -132,6 +132,116 @@ export class MainComponent implements OnInit {
           name: "Twitter and Facebook",
           width: 500,
           height: 300
+        },
+        {
+          name: 'Medium Rectangle',
+          width: 300,
+          height: 250
+        },
+        {
+          name: 'Large Rectangle',
+          width: 336,
+          height: 280
+        },
+        {
+          name: 'Leaderboard',
+          width: 728,
+          height: 90
+        },
+        {
+          name: 'Mobile',
+          width: 320,
+          height: 50
+        },
+        {
+          name: 'Large Mobile',
+          width: 320,
+          height: 100
+        },
+        {
+          name: 'Half Page',
+          width: 300,
+          height: 600
+        },
+        {
+          name: 'Wide Skyscraper',
+          width: 160,
+          height: 600
+        },
+        {
+          name: 'Skyscraper',
+          width: 120,
+          height: 600
+        },
+        {
+          name: 'Square',
+          width: 250,
+          height: 250
+        },
+        {
+          name: 'Small Square',
+          width: 200,
+          height: 200
+        },
+        {
+          name: 'Main Banner',
+          width: 468,
+          height: 60
+        },
+        {
+          name: 'Portrait',
+          width: 300,
+          height: 1050
+        },
+        {
+          name: 'Billboard',
+          width: 970,
+          height: 250
+        },
+        {
+          name: 'Large Leaderboard',
+          width: 970,
+          height: 90
+        },
+        {
+          name: 'Half Banner',
+          width: 234,
+          height: 60
+        },
+        {
+          name: 'Vertical Banner',
+          width: 120,
+          height: 240
+        },
+        {
+          name: 'Small Rectangle',
+          width: 180,
+          height: 150
+        },
+        {
+          name: 'Facebook Post',
+          width: 1200,
+          height: 900
+        },
+        {
+          name: 'Facebook Cover',
+          width: 851,
+          height: 315
+        },
+        {
+          name: 'Facebook Ad',
+          width: 1200,
+          height: 628
+        },
+        {
+          name: 'Twitter Post',
+          width: 1024,
+          height: 512
+        },
+        {
+          name: 'Instagram Post',
+          width: 1080,
+          height: 1080
         }
       ]
     };
@@ -312,9 +422,11 @@ export class MainComponent implements OnInit {
     window['_captionText'].left = (selectedSize.width / 2) - (window['_captionText'].width / 2);
     window['_captionText'].setCoords();
 
-    window['_logo'].top = 20;
-    window['_logo'].left = 20;
-    window['_logo'].setCoords();
+    if(window['_logo']) {
+      window['_logo'].top = 20;
+      window['_logo'].left = 20;
+      window['_logo'].setCoords();
+    }
 
     window["_canvas"].calcOffset();
   }
@@ -344,7 +456,7 @@ export class MainComponent implements OnInit {
 
   onLogoSettingsChange(payload) {
     window["_canvas"].discardActiveObject();
-    
+
     window["_logo"].opacity = !payload.isGraphicHidden ? 1 : 0;
     window["_logo"].selectable = !payload.isGraphicHidden;
 
@@ -359,8 +471,8 @@ export class MainComponent implements OnInit {
         var rect = new fabric.Rect({
           left: 0,
           top: 0,
-          rx: payload.radius*20,
-          ry: payload.radius*20,
+          rx: payload.radius * 20,
+          ry: payload.radius * 20,
           width: this.width,
           height: this.height,
           fill: '#000000'

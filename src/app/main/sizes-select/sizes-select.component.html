@@ -1,5 +1,52 @@
+<!-- <div class="size-select-container">
+  <div class="btn inline-block pointer pinterest" [ngClass]="{ selected:  0 === sizeSettings.selectedSizeIndex }"
+    selectable (isSelectedChange)="onIsSelectedChange(0)"><img class="svg-icon" src="assets/svg/pinterest.svg"></div>
+  <div class="btn inline-block pointer instagram size-select-container-center-spacer"
+    [ngClass]="{ selected:  1 === sizeSettings.selectedSizeIndex }" selectable
+    (isSelectedChange)="onIsSelectedChange(1)"><img class="svg-icon" src="assets/svg/instagram.svg"></div>
+  <div class="btn inline-block pointer twitter-and-facebook"
+    [ngClass]="{ selected: 2 === sizeSettings.selectedSizeIndex }" selectable
+    (isSelectedChange)="onIsSelectedChange(2)"><img class="svg-icon" src="assets/svg/twitter.svg"><img class="svg-icon"
+      src="assets/svg/facebook.svg"></div>
+</div>
 <div class="size-select-container">
-  <div class="btn inline-block pointer pinterest" [ngClass]="{ selected:  0 === sizeSettings.selectedSizeIndex }" selectable (isSelectedChange)="onIsSelectedChange(0)"><img class="svg-icon" src="assets/svg/pinterest.svg"></div>
-  <div class="btn inline-block pointer instagram size-select-container-center-spacer" [ngClass]="{ selected:  1 === sizeSettings.selectedSizeIndex }" selectable (isSelectedChange)="onIsSelectedChange(1)"><img class="svg-icon" src="assets/svg/instagram.svg"></div>
-  <div class="btn inline-block pointer twitter-and-facebook" [ngClass]="{ selected: 2 === sizeSettings.selectedSizeIndex }" selectable (isSelectedChange)="onIsSelectedChange(2)"><img class="svg-icon" src="assets/svg/twitter.svg"><img class="svg-icon" src="assets/svg/facebook.svg"></div>
+  <div ngbDropdown class="d-inline-block">
+    <button class="btn btn-default btn-md dropdown-menu-btn-filters" id="dropdownBasic1" ngbDropdownToggle>ciao</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button ngbDropdownItem>CIAO</button>
+      <button ngbDropdownItem>CIAO</button>
+      <button ngbDropdownItem>CIAO</button>
+    </div>
+  </div>
+</div> -->
+
+<div class="size-select-container container">
+  <div class="column">
+    <div class="row">
+      <div class="size-select-container">
+        <div class="btn inline-block pointer pinterest" [ngClass]="{ selected:  0 === sizeSettings.selectedSizeIndex }"
+          selectable (isSelectedChange)="onIsSelectedChange(0)"><img class="svg-icon" src="assets/svg/pinterest.svg"></div>
+        <div class="btn inline-block pointer instagram size-select-container-center-spacer"
+          [ngClass]="{ selected:  1 === sizeSettings.selectedSizeIndex }" selectable
+          (isSelectedChange)="onIsSelectedChange(1)"><img class="svg-icon" src="assets/svg/instagram.svg"></div>
+        <div class="btn inline-block pointer twitter-and-facebook"
+          [ngClass]="{ selected: 2 === sizeSettings.selectedSizeIndex }" selectable
+          (isSelectedChange)="onIsSelectedChange(2)"><img class="svg-icon" src="assets/svg/twitter.svg"><img class="svg-icon"
+            src="assets/svg/facebook.svg"></div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-default btn-md dropdown-menu-btn-filters" id="dropdownBasic1" ngbDropdownToggle>Other Sizes</button>
+        <div style="overflow-y: scroll; height: 200px; width: 320px" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem *ngFor="let size of sizeSettings.sizes; let i = index" (click)="onIsSelectedChange(i)">
+            {{size.name}}
+            <span class="float-right font-weight-light">
+              {{size.width}}x{{size.height}} px
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
