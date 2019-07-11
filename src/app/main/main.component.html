@@ -12,6 +12,15 @@
                 </app-image-select>
             </div>
         </div>
+        <div class="control-panel">
+            <div>
+                <h1 class="inline-block">Download</h1>
+            </div>
+            <div>
+                <button class="btn bt-success btn-block btn-lg text-center px-3" (click)="onDownload()">Download</button>
+            </div>
+            <a id="download-a" download="image.png" href=""></a>
+        </div>
     </div>
 
     <div class="col-shared col-middle">
@@ -77,14 +86,14 @@
         </div>
 
         <!-- Download Button -->
-        <div class="control-panel">
+        <!-- <div class="control-panel">
             <div>
                 <h1 class="inline-block">Download</h1>
             </div>
             <div>
                 <button class="btn bt-success btn-block btn-lg text-center px-3" (click)="onDownload()">Download</button>
             </div>
-        </div>
-        <a id="download-a" download="image.png" href=""></a>
+            <a id="download-a" download="image.png" href=""></a>
+        </div> -->
     </div>
 </div>

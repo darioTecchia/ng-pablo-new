@@ -125,13 +125,40 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
     });
 
     canvas.on('object:selected', (e) => {
+      if (e.target.isType('image')) {
+        return;
+      }
+
       this.editSettingsService.updateEditText({
         elem: e.target,
         selected: true
       });
     })
 
+    canvas.on('object:scaling', (e) => {
+      if (e.target.isType('image')) {
+        return;
+      }
+
+      console.log(e);
+    })
+
+    canvas.on('object:scaled', (e) => {
+      if (e.target.isType('image')) {
+        return;
+      }
+    })
+
     canvas.on('selection:updated', (e) => {
+      if (e.target.isType('image')) {
+        this.editSettingsService.updateEditText({
+          elem: e.deselected[0],
+          selected: false
+        });
+        
+        return;
+      }
+
       this.editSettingsService.updateEditText({
         elem: e.target,
         selected: true
@@ -139,6 +166,10 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
     });
 
     canvas.on('selection:cleared', (e) => {
+      if (e.deselected[0].isType('image')) {
+        return;
+      }
+
       this.editSettingsService.updateEditText({
         elem: e.deselected[0],
         selected: false
@@ -148,20 +179,28 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
     canvas.on('object:moving', (e) => {
       var obj = e.target;
 
-      obj.set({
-        top: this.clamp(obj.top, 0, obj.canvas.height - obj.height),
-        left: this.clamp(obj.left, 0, obj.canvas.width - obj.width),
-      })
-      obj.setCoords();
+      if (obj.isType('image')) {
+        obj.set({
+          top: this.clamp(obj.top, 0, obj.canvas.height - obj.height * obj.scaleY),
+          left: this.clamp(obj.left, 0, obj.canvas.width - obj.width * obj.scaleX),
+        });
+      } else {
+        obj.set({
+          top: this.clamp(obj.top, 0, obj.canvas.height - obj.height),
+          left: this.clamp(obj.left, 0, obj.canvas.width - obj.width),
+        });
+        this.editSettingsService.updateEditText({
+          elem: e.target,
+          reposition: true
+        });
 
-      this.editSettingsService.updateEditText({
-        elem: e.target,
-        reposition: true
-      });
+      }
+      obj.setCoords();
+      canvas.renderAll();
     });
   }
 
-  private clamp(num:number, min:number, max:number) {
+  private clamp(num: number, min: number, max: number) {
     return Math.min(Math.max(num, min), max);
   };
 
@@ -173,23 +212,7 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
     let modelMatch = _.find(this.imageSettings.images, (i: any) => { return i.uniqueId == this.imageSettings.selectedImageUniqueId });
     image.src = this.editSettingsService.processImgUrl(modelMatch['url'], sizeData.width, sizeData.height);
     image.crossOrigin = "Anonymous";
-
-    // //clean canvas
-    // this.ctx.clearRect(0, 0, sizeData.width, sizeData.height);
-
-    // //provide imageFilterService with a new canvas
-    // this.imageFilterService.updateCanvasReference(this.canvasArtboard.nativeElement);
-
-    // //update canvas
-    // image.onload = () => this.ctx.drawImage(image, 0, 0);
   }
-
-  // private onGenerateDownloadableImage() {
-  //   let image = new Image();
-  //   image.src = this.canvasArtboard.nativeElement.toDataURL("image/png");
-  //   image.crossOrigin = "Anonymous";
-  //   this.canvasSettings.downloadableImage = image;
-  // }
 
   private onUpdateFilter() {
     // console.log('update filter: likely use the imageFilterService canvas ref');

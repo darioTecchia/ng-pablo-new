@@ -279,6 +279,9 @@ export class MainComponent implements OnInit {
 
   onSizeSettingsChange(payload) {
     console.log(payload);
+    window['_canvas'].discardActiveObject();
+    window["_canvas"].renderAll();
+
     window["_canvas"].setWidth(payload.sizes[payload.selectedSizeIndex].width);
     window["_canvas"].setHeight(payload.sizes[payload.selectedSizeIndex].height);
     let center = window['_canvas'].getCenter();
@@ -309,6 +312,10 @@ export class MainComponent implements OnInit {
     window['_captionText'].left = (selectedSize.width / 2) - (window['_captionText'].width / 2);
     window['_captionText'].setCoords();
 
+    window['_logo'].top = 20;
+    window['_logo'].left = 20;
+    window['_logo'].setCoords();
+
     window["_canvas"].calcOffset();
   }
 
@@ -321,6 +328,8 @@ export class MainComponent implements OnInit {
   }
 
   onTextSettingsChange(payload) {
+    window["_canvas"].discardActiveObject();
+
     window["_headerText"].opacity = payload.hasHeader ? 1 : 0;
     window["_headerText"].selectable = payload.hasHeader;
 
@@ -334,7 +343,33 @@ export class MainComponent implements OnInit {
   }
 
   onLogoSettingsChange(payload) {
-    this.editSettingsService.updateOverlays();
+    window["_canvas"].discardActiveObject();
+    
+    window["_logo"].opacity = !payload.isGraphicHidden ? 1 : 0;
+    window["_logo"].selectable = !payload.isGraphicHidden;
+
+    let imageWidth = this.logoSettings.size;
+    let imageHeight = (this.logoSettings.size / window['_logo'].width) * window['_logo'].height;
+    window['_logo'].set({
+      scaleX: payload.size / window['_logo'].width,
+      scaleY: imageHeight / window['_logo'].height
+    });
+    window["_logo"].set({
+      'clipTo': function (ctx) {
+        var rect = new fabric.Rect({
+          left: 0,
+          top: 0,
+          rx: payload.radius*20,
+          ry: payload.radius*20,
+          width: this.width,
+          height: this.height,
+          fill: '#000000'
+        });
+        rect._render(ctx, false);
+      }
+    })
+    window["_logo"].setCoords();
+    window["_canvas"].renderAll();
   }
 
   onDownload() {
