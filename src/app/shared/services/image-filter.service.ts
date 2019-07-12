@@ -89,6 +89,8 @@ export class ImageFilterService {
   public resetFilter(el) {
     console.log('reset filter');
     el.filters = [];
+    el.applyFilters();
+    window['_canvas'].renderAll();
   }
 
 }
