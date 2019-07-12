@@ -22,7 +22,7 @@
 
 <div class="size-select-container container">
   <div class="column">
-    <div class="row">
+    <!-- <div class="row">
       <div class="size-select-container">
         <div class="btn inline-block pointer pinterest" [ngClass]="{ selected:  0 === sizeSettings.selectedSizeIndex }"
           selectable (isSelectedChange)="onIsSelectedChange(0)"><img class="svg-icon" src="assets/svg/pinterest.svg"></div>
@@ -34,10 +34,10 @@
           (isSelectedChange)="onIsSelectedChange(2)"><img class="svg-icon" src="assets/svg/twitter.svg"><img class="svg-icon"
             src="assets/svg/facebook.svg"></div>
       </div>
-    </div>
+    </div> -->
     <div class="row mt-2">
       <div ngbDropdown class="d-inline-block">
-        <button class="btn btn-default btn-md dropdown-menu-btn-filters" id="dropdownBasic1" ngbDropdownToggle>Other Sizes</button>
+        <button class="btn btn-default btn-md dropdown-menu-btn-filters" id="dropdownBasic1" ngbDropdownToggle>{{sizeSettings.sizes[sizeSettings.selectedSizeIndex].name}}</button>
         <div style="overflow-y: scroll; height: 200px; width: 320px" ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem *ngFor="let size of sizeSettings.sizes; let i = index" (click)="onIsSelectedChange(i)">
             {{size.name}}
