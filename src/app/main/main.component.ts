@@ -315,13 +315,16 @@ export class MainComponent implements OnInit {
         { uniqueId: 2, type: 'caption', text: "Double-click to Edit", fontIndex: 0, colorIndex: 0, alignIndex: 2, sizeIndex: 0, isBold: false, isItalic: false },
       ],
       selectedQuoteIndex: 0,
-      quotes: [{
-        text: "So it goes."
-      }, {
-        text: "Whatever you are, be a good one."
-      }, {
-        text: "Try and fail, but never fail to try."
-      }
+      quotes: [
+        {
+          text: "Whatever you are, be a good one."
+        }, 
+        {
+          text: "Try and fail, but never fail to try."
+        },
+        {
+          text: "\"Pane e puparuol.\" \n\n-Marco Ferraioli"
+        }
       ],
       options: {
         align: ['left', 'center', 'right'],
