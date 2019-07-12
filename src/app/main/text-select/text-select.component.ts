@@ -18,7 +18,7 @@ export class TextSelectComponent implements AfterViewInit {
   private selectableHeader: SelectableDirective;
   private selectableBody: SelectableDirective;
   private selectableCaption: SelectableDirective;
-  private canAddQuotes: boolean = true;
+  private canAddQuotes: boolean = false;
 
   private clamp(num, min, max) {
     return num <= min ? min : num >= max ? max : num;
@@ -27,6 +27,37 @@ export class TextSelectComponent implements AfterViewInit {
   constructor(private changeDetectionRef: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
+
+    //view sync
+    let list = this.selectables.toArray();
+    this.selectableHeader = list[0];
+    this.selectableBody = list[1];
+    this.selectableCaption = list[2];
+
+    //data
+    this.selectableHeader.isSelected = this.textSettings.hasHeader;
+    this.selectableBody.isSelected = this.textSettings.hasBody;
+    this.selectableCaption.isSelected = this.textSettings.hasCaption;
+    this.canAddQuotes = this.selectableBody.isSelected;
+
+    //recheck as this.canAddQuotes was checked prior to ngAfterViewInit being called
+    this.changeDetectionRef.detectChanges();
+  }
+
+  onIsSelectedChange($event) {
+
+    //quotes check
+    if ($event === this.selectableBody) {
+      this.canAddQuotes = $event.isSelected;
+    }
+
+    //update
+    this.textSettings.hasHeader = this.selectableHeader.isSelected;
+    this.textSettings.hasBody = this.selectableBody.isSelected;
+    this.textSettings.hasCaption = this.selectableCaption.isSelected;
+
+    //emit change
+    this.textSettingsChange.emit(this.textSettings);
   }
 
   updateQuote() {
@@ -38,7 +69,6 @@ export class TextSelectComponent implements AfterViewInit {
     window['_bodyText'].setCoords();
     window['_canvas'].renderAll();
     console.log(this.textSettings.quotes[index].text, index);
-
   }
 
   onQuotePrev() {
