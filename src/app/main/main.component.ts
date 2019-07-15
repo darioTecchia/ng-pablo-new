@@ -317,13 +317,67 @@ export class MainComponent implements OnInit {
       selectedQuoteIndex: 0,
       quotes: [
         {
-          text: "Whatever you are, be a good one."
+          text: "“If dogs don’t like your dog food, the packaging doesn’t matter” – Stephen Denny"
         }, 
         {
-          text: "Try and fail, but never fail to try."
+          text: "“Make it simple. Make it memorable. Make it inviting to look at” – Leo Burnett"
         },
         {
-          text: "\"Pane e puparuol.\" \n\n-Marco Ferraioli"
+          text: "“If you can’t explain it to a six year old, you don’t understand it well enough yourself” – Albert Einsteen"
+        },
+        {
+          text: "“If you want to understand how a lion hunts, don’t go to the zoo. Go to the jungle.” – Jim Stengel"
+        },
+        {
+          text: "“Think like a wise man but communicate in the language of the people” – William Butler Yeats"
+        },
+        {
+          text: "“Don’t tell me how good you make it; tell me how good it makes me when I use it.” – Leo Burnett"
+        },
+        {
+          text: "“Stopping advertising to save money is like stopping your watch to save time.” – Henry Ford"
+        },
+        {
+          text: "“Doing business without advertising is like winking at a girl in the dark. You know what you are doing, but nobody else does” - Steuart Henderson Britt"
+        },
+        {
+          text: "“Nobody reads ads. People read what interests them, and sometimes it’s an ad.” - Howard Luck Gossage "
+        },
+        {
+          text: "“If you cannot do great things, do small things in a great way.” - Napoleon"
+        },
+        {
+          text: "“If opportunity doesn’t knock, build a door.” ​– Milton Berle"
+        },
+        {
+          text: "“Imagination is everything. It is the preview of life’s coming attractions.” - Albert Einstein"
+        },
+        {
+          text: "“Remember that happiness is a way of travel, not a destination.” – Roy M. Goodman"
+        },
+        {
+          text: "“The secret of business is to know something that nobody else knows.” - Aristoteles Onassis"
+        },
+        {
+          text: "“We cannot always build the future of our youth, but we can build our youth for the future.” - Franklin D. Roosevelt"
+        },
+        {
+          text: "“Happiness is not a goal; it is a by-product.” - Eleanor Roosevelt"
+        },
+        {
+          text: "“Children are our most valuable resource.” - Herbert Hoover"
+        },
+        {
+          text: "“Music in the soul can be heard by the universe.” - Lao Tzu"
+        },
+        {
+          text: "“Peace begins with a smile.” - Mother Teresa"
+        },
+        {
+          text: "“Never leave that till tomorrow which you can do today.” - Benjamin Franklin"
+        },
+        {
+          text: "“If you don’t make mistakes, you’re not working on hard enough problems.” - Frank Wilczek"
         }
       ],
       options: {
