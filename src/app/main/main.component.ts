@@ -332,7 +332,15 @@ export class MainComponent implements OnInit {
         sizePercentage: ['100', '110', '120'],
         fonts: [
           'Times New Roman',
-          'Arial'
+          'Arial',
+          'Lobster',
+          'Roboto',
+          'Roboto Mono',
+          'Titillium Web',
+          'sans-serif',
+          'Verdana',
+          'Comic Sans MS',
+          'Patua One'
         ],
         colors: ['Black', '#9C27B0', '#2196F3', '#009688', '#CDDC39', '#FF9800']
       }
