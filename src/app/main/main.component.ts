@@ -382,7 +382,7 @@ export class MainComponent implements OnInit {
       ],
       options: {
         align: ['left', 'center', 'right'],
-        sizes: [21, 24, 27],
+        sizes: [14, 16, 18, 20, 22, 24, 24, 28, 30],
         sizePercentage: ['100', '110', '120'],
         fonts: [
           'Times New Roman',

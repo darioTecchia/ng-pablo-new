@@ -88,17 +88,11 @@ export class EditTextComponent implements OnInit {
     this.update();
   }
 
-  private onUpdateSize() {
-    //target
-    let sizeIndex = this.textSettings.options.sizes.indexOf(this.editableTextComponentCurrent.fontSize) + 1;
-
-    //cycle target check
-    if (sizeIndex > this.textSettings.options.sizes.length - 1) {
-      sizeIndex = 0;
-    }
-
+  private onUpdateSize(selectedSize) {
     //update
-    this.editableTextComponentCurrent.fontSize = this.textSettings.options.sizes[sizeIndex];
+    this.editableTextComponentCurrent.set({
+      'fontSize': selectedSize
+    });
     this.update();
   }
 

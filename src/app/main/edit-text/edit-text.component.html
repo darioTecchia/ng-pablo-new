@@ -48,9 +48,13 @@
     i
   </button>
 
-  <button (click)="onUpdateSize()" class="float-left menu-item">
-    <img class="svg-icon" [src]="'assets/images/' + editableTextComponentCurrent.fontSize + '-font-size.png'">
-  </button>
+  <div style="height: 100%; width: 48px" ngbDropdown class="menu-item float-left d-inline-block">
+    <button style="width: 100%" class="btn menu-item" id="dropdownSizes" ngbDropdownToggle>{{editableTextComponentCurrent.fontSize}}</button>
+    <div class="menu-item sizes" ngbDropdownMenu aria-labelledby="dropdownSizes">
+      <button (click)="onUpdateSize(fontSize)" class="menu-item" ngbDropdownItem
+        *ngFor="let fontSize of textSettings.options.sizes">{{fontSize}}</button>
+    </div>
+  </div>
 
   <button (click)="onUpdateAlign()" class="float-left menu-item">
     <img class="svg-icon" [src]="'assets/svg/align-' + editableTextComponentCurrent.textAlign + '.svg'">
@@ -58,7 +62,6 @@
 
   <div class="middle float-left">
     <input [ngStyle]="{'background-color' : editableTextComponentCurrent.fill}" #color (change)="onUpdateColor(color.value)" class="color" type="color">
-
   </div>
 
   <!-- <div style="height: 100%" ngbDropdown class="menu-item float-left d-inline-block">

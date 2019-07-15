@@ -60,3 +60,8 @@ select.font:focus {
   vertical-align: middle;
   height: 100%;
 }
+
+.sizes {
+  width: 50px !important;
+  min-width: unset !important;
+}
