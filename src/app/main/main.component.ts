@@ -507,14 +507,23 @@ export class MainComponent implements OnInit {
   onTextSettingsChange(payload) {
     window["_canvas"].discardActiveObject();
 
-    window["_headerText"].opacity = payload.hasHeader ? 1 : 0;
-    window["_headerText"].selectable = payload.hasHeader;
+    window["_headerText"].set({
+      opacity: this.textSettings.hasHeader ? 1 : 0,
+      selectable: this.textSettings.hasHeader,
+      hoverCursor: this.textSettings.hasHeader ? 'move' : 'arrow' 
+    });
 
-    window["_bodyText"].opacity = payload.hasBody ? 1 : 0;
-    window["_bodyText"].selectable = payload.hasBody;
+    window["_bodyText"].set({
+      opacity: this.textSettings.hasBody ? 1 : 0,
+      selectable: this.textSettings.hasBody,
+      hoverCursor: this.textSettings.hasBody ? 'move' : 'arrow' 
+    });
 
-    window["_captionText"].opacity = payload.hasCaption ? 1 : 0;
-    window["_captionText"].selectable = payload.hasCaption;
+    window["_captionText"].set({
+      opacity: this.textSettings.hasCaption ? 1 : 0,
+      selectable: this.textSettings.hasCaption,
+      hoverCursor: this.textSettings.hasCaption ? 'move' : 'arrow' 
+    });
 
     window["_canvas"].renderAll();
   }

@@ -102,14 +102,23 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
     canvas.add(bodyText);
     canvas.add(captionText);
 
-    headerText.opacity = this.textSettings.hasHeader ? 1 : 0;
-    headerText.selectable = this.textSettings.hasHeader;
+    headerText.set({
+      opacity: this.textSettings.hasHeader ? 1 : 0,
+      selectable: this.textSettings.hasHeader,
+      hoverCursor: this.textSettings.hasHeader ? 'move' : 'arrow' 
+    });
 
-    bodyText.opacity = this.textSettings.hasBody ? 1 : 0;
-    bodyText.selectable = this.textSettings.hasBody;
+    bodyText.set({
+      opacity: this.textSettings.hasBody ? 1 : 0,
+      selectable: this.textSettings.hasBody,
+      hoverCursor: this.textSettings.hasBody ? 'move' : 'arrow' 
+    });
 
-    captionText.opacity = this.textSettings.hasCaption ? 1 : 0;
-    captionText.selectable = this.textSettings.hasCaption;
+    captionText.set({
+      opacity: this.textSettings.hasCaption ? 1 : 0,
+      selectable: this.textSettings.hasCaption,
+      hoverCursor: this.textSettings.hasCaption ? 'move' : 'arrow' 
+    });
 
     let center = canvas.getCenter();
     fabric.Image.fromURL(this.imageSettings.images[this.imageSettings.selectedImageUniqueId].url, function (img) {
@@ -123,6 +132,8 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
         originY: 'center'
       });
     });
+
+    // canvas.renderAll();
 
     canvas.on('object:selected', (e) => {
       if (e.target.isType('image')) {
@@ -138,9 +149,17 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
     canvas.on('object:scaling', (e) => {
       if (e.target.isType('image')) {
         return;
+      } else {
+        this.editSettingsService.updateEditText({
+          elem: e.target,
+          reposition: true
+        });
+        console.log(e.pointer, e.transform);
+        if(e.pointer.x <= 0 || e.pointer.x >= canvas.width) {
+          console.log(e);
+          return;
+        }
       }
-
-      console.log(e);
     })
 
     canvas.on('object:scaled', (e) => {
