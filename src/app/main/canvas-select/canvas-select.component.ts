@@ -154,10 +154,18 @@ export class CanvasSelectComponent implements AfterViewInit, OnInit {
           elem: e.target,
           reposition: true
         });
-        console.log(e.pointer, e.transform);
         if(e.pointer.x <= 0 || e.pointer.x >= canvas.width) {
+
+          if(e.transform.corner == 'mr') {
+            if(true) {
+
+            }
+          } else {
+
+          }
+
           console.log(e);
-          return;
+          // return;
         }
       }
     })
